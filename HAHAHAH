@@ -1,6 +1,6 @@
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Music activated have fun",true)
 
-lastroom.changed:wait()
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
 
 local function getGitSoundId(GithubSoundPath: string, AssetName: string): Sound
     local Url = GithubSoundPath
