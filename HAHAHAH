@@ -1,36 +1,20 @@
-local Players = game:GetService("Players")
-local SoundService = game:GetService("SoundService")
+require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Music activated have fun",true)
 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
 
-local localPlayer = Players.LocalPlayer
-if localPlayer and localPlayer:FindFirstChild("PlayerGui") then
-    local mainUI = localPlayer.PlayerGui:FindFirstChild("MainUI")
-    if mainUI and mainUI:FindFirstChild("Initiator") and mainUI.Initiator:FindFirstChild("Main_Game") then
-        require(mainUI.Initiator.Main_Game).caption("Music activated have fun", true)
+local function getGitSoundId(GithubSoundPath: string, AssetName: string): Sound
+    local Url = GithubSoundPath
+
+    if not isfile(AssetName..".mp3") then 
+        writefile(AssetName..".mp3", game:HttpGet(Url)) 
     end
+
+    local Sound = Instance.new("Sound")
+    Sound.SoundId = getcustomasset(AssetName..".mp3", true)
+    return Sound 
 end
 
-if lastroom and lastroom.Changed then
-    lastroom.Changed:Wait()
-end
-
-local function getGitSoundId(githubSoundPath: string, assetName: string): Sound
-    local fileName = assetName .. ".mp3"
-    
-    if not isfile(fileName) then  
-        writefile(fileName, game:HttpGet(githubSoundPath))  
-    end  
-    
-    local sound = Instance.new("Sound") 
-    sound.SoundId = getcustomasset(fileName, true) 
-    return sound  
-end  
-
-local customMusic = getGitSoundId(
-    "https://raw.githubusercontent.com/jackpetersmithwarr-collab/sounds/main/YTDown.com_YouTube_Media_QxWKRrsDank_Do-Ya-Like-x-Resonance_008_128k%202.mp3", 
-    "babygirlyaknowwhatiwant"
-) 
-
-customMusic.Parent = SoundService 
-customMusic.Looped = true 
-customMusic:Play()
+local CustomMusic = getGitSoundId("https://raw.githubusercontent.com/jackpetersmithwarr-collab/sounds/main/YTDown.com_YouTube_Media_QxWKRrsDank_Do-Ya-Like-x-Resonance_008_128k%202.mp3", "babygirlyaknowwhatiwant")
+CustomMusic.Parent = game.SoundService
+CustomMusic.Looped = true
+CustomMusic:Play()
